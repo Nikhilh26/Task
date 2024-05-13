@@ -1,0 +1,37 @@
+.container-signup{
+    width: 50vw;
+    height: 60vh;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20vh;
+    border: black 2px solid;
+    border-radius: 5px;
+}
+
+.form-component{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10vh;
+    text-align: center;
+    width: 60%;
+    margin: 10vh auto 0px auto;
+    padding: 40px;
+}
+
+.description{
+    background-color: rgb(220, 79, 220);
+    font-size: 40px;
+    padding: 40px;
+    width: 60%;
+}
+
+.btn{
+    margin-top: 10vh;
+    font-weight: bolder;
+    width: 100%;
+}
+
+button:hover{
+    cursor: pointer;
+}
