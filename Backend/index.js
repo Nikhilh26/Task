@@ -28,10 +28,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Routes
-app.use('/api/todo', (res, req, next) => {
-    console.log('recieved1')
-    next();
-}, toDoRouter);
+app.use('/api/todo', toDoRouter);
 app.use('/api', authRouter);
 
 // PORT activation

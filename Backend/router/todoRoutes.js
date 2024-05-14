@@ -5,10 +5,12 @@ const toDoRouter = express.Router();
 
 toDoRouter.use(validateToken);
 
-toDoRouter.post('/q', ToDoControllers.createTodo);
+toDoRouter.post('/', ToDoControllers.createTodo);
 
-toDoRouter.put('/', ToDoControllers.markTodoAsCompleted);
+toDoRouter.put('/complete', ToDoControllers.markTodoAsCompleted);
 
 toDoRouter.delete('/', ToDoControllers.deleteTodo);
+
+toDoRouter.put('/description', ToDoControllers.updateTaskDescription);
 
 module.exports = toDoRouter;

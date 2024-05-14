@@ -9,11 +9,13 @@ const todoItemSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
         required: true
     }
+}, {
+    timestamps: true // Automatically manage createdAt and updatedAt fields
 });
 
 // Create TodoItem model

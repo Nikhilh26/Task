@@ -6,7 +6,7 @@ const ACCESS_TOKEN = process.env.JWT_TOKEN;
 
 const validateToken = async (req, res, next) => {
     let token = req.headers.authorization.split(" ")[1];
-    console.log(token);
+    // console.log(token);
 
     try {
         jwt.verify(token, ACCESS_TOKEN, (err, decoded) => {
@@ -14,7 +14,10 @@ const validateToken = async (req, res, next) => {
             if (err) {
                 res.status(401);
                 console.log("Error in jwt Validation @helper/authMiddleware");
-                throw Error("Stale Tokens");
+                return res.json({
+                    success: false,
+                    message: 'Invalid Token Provided'
+                })
             }
 
             req.user = decoded;
