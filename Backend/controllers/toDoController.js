@@ -1,4 +1,5 @@
 const TodoItem = require("../model/toDoItemModel");
+const User = require("../model/usersModel");
 
 class ToDoControllers {
 
@@ -98,6 +99,40 @@ class ToDoControllers {
             res.json({
                 success: false,
                 message: 'Something went wrong at server'
+            })
+        }
+    }
+
+    //Tested
+    static async getUsersTasks(req, res) {
+        try {
+            const userId = req.user._id;
+            const userTasks = await TodoItem.find({ userId });
+            console.log(userTasks);
+
+            let completedTasks = [];
+            let toDoTasks = [];
+
+            userTasks.forEach(element => {
+                if (element.completed) completedTasks.push({ description: element.description, taskId: element._id });
+                else toDoTasks.push({ description: element.description, taskId: element._id });
+            })
+            const name = (await User.findById({ _id: userId })).name;
+
+            return res.json({
+                success: true,
+                completedTasks,
+                toDoTasks,
+                name
+            })
+
+        } catch (error) {
+
+            console.log(error);
+
+            return res.json({
+                message: 'Something Went wrong',
+                success: false
             })
         }
     }

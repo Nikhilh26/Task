@@ -1,7 +1,6 @@
 const User = require("./../model/usersModel");
 const PasswordUtils = require("./../helper/passwordUtils");
 const JWT = require("jsonwebtoken");
-const TodoItem = require("../model/toDoItemModel");
 
 class RegistrationControllers {
 
@@ -65,13 +64,13 @@ class RegistrationControllers {
             console.log(password);
             // Tested -> Working fine 
             if (!email || !password) {
-                return res.status(404).send({ "Response": "Incomplete Credentials!!", request: req.body });
+                return res.status(404).send({ "message": "Incomplete Credentials!!", request: req.body });
             }
 
             const user = await User.findOne({ email });
             // Tested -> Working fine
             if (!user) {
-                return res.status(404).json({ "message": "Please Create Account First" });
+                return res.status(404).json({ message: "Please Create Account First", redirect: true });
             }
 
             const check = await PasswordUtils.comparePasswords(password, user.password);
@@ -90,23 +89,11 @@ class RegistrationControllers {
 
             // Tested -> Working fine
             const token = JWT.sign({ _id: user._id }, process.env.JWT_TOKEN, { expiresIn: '7d' });
-            const userTasks = await TodoItem.find({ userId: user._id });
-            console.log(userTasks);
-
-            let completedTasks = [];
-            let toDoTasks = [];
-
-            userTasks.forEach(element => {
-                if (element.completed) completedTasks.push({ description: element.description, taskId: element._id });
-                else toDoTasks.push({ description: element.description, taskId: element._id });
-            })
 
             res.status(200).json({
                 success: true,
                 message: "Login Succesfull",
-                token,
-                completedTasks,
-                toDoTasks
+                token
             });
 
         } catch (error) {

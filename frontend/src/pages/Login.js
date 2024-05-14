@@ -1,14 +1,51 @@
+import { useState } from 'react';
 import './../styles/Login.css';
-import { Link } from 'react-router-dom';
+import { Link, redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleOnClickSubmit = async (e) => {
+        e.preventDefault();
+
+        console.log(password);
+        console.log(email);
+
+        const resp = await fetch('http://localhost:8000/api/login', {
+            body: JSON.stringify({
+                email: email,
+                password: password
+            }),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        const body = await resp.json();
+        console.log(body);
+        if (body.success) {
+            localStorage.setItem('token', body.token);
+            navigate('/')
+        }
+
+        alert(body.message);
+
+        if (body.redirect) {
+            navigate('/signup');
+        }
+    }
+
     return (
-        <div className='container-signup'>
-            <h1 className='description'>
+        <div className='container-login'>
+            <h1 className='description-login'>
                 Please Login to Manage and Track your task
             </h1>
 
-            <form className='form-component'>
+            <form className='form-component-login'>
 
                 <label htmlFor='email'>
                     <h2>
@@ -16,16 +53,16 @@ export default function SignUp() {
                     </h2>
                 </label>
 
-                <input id='name' type="text"></input>
+                <input id='email' type="text" value={email} onChange={(e) => setEmail(e.target.value)}></input>
 
                 <label htmlFor='password'>
                     <h2>
                         Password:
                     </h2>
                 </label>
-                <input id='password' type="password"></input>
+                <input id='password' type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
 
-                <div className='btn'>
+                <div className='btn' onClick={handleOnClickSubmit}>
                     <button style={{ 'padding': '5px 40px', backgroundColor: 'rgb(79, 107, 220)', width: '80%', 'fontWeight': 'bolder' }}>Submit</button>
                 </div>
 

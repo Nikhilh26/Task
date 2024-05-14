@@ -13,4 +13,6 @@ toDoRouter.delete('/', ToDoControllers.deleteTodo);
 
 toDoRouter.put('/description', ToDoControllers.updateTaskDescription);
 
+toDoRouter.get('/', ToDoControllers.getUsersTasks);
+
 module.exports = toDoRouter;

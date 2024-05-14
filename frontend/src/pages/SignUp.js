@@ -1,7 +1,46 @@
 import './../styles/SignUp.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function SignUp() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    const navigate = useNavigate();
+
+    const handleOnClickSubmit = async (e) => {
+        e.preventDefault();
+
+        console.log(password);
+        console.log(email);
+
+        const resp = await fetch('http://localhost:8000/api/register', {
+            body: JSON.stringify({
+                email,
+                password,
+                name
+            }),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        const body = await resp.json();
+        console.log(body);
+
+        if (body.success) {
+            localStorage.setItem('token', body.token);
+            navigate('/')
+        }
+
+        alert(body.message);
+
+        if (body.redirect) {
+            navigate('/login');
+        }
+    }
+
     return (
         <div className='container-signup'>
             <h1 className='description'>
@@ -16,7 +55,7 @@ export default function SignUp() {
                     </h2>
                 </label>
 
-                <input id='email' type="email"></input>
+                <input id='email' type="email" value={email} onChange={(e) => setEmail(e.target.value)}></input>
 
                 <label htmlFor='name'>
                     <h2>
@@ -24,17 +63,18 @@ export default function SignUp() {
                     </h2>
                 </label>
 
-                <input id='name' type="text"></input>
+                <input id='name' type="text" value={name} onChange={(e) => setName(e.target.value)}></input>
 
                 <label htmlFor='password'>
                     <h2>
                         Password:
                     </h2>
                 </label>
-                <input id='password' type="password"></input>
+
+                <input id='password' type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
 
                 <div className='btn'>
-                    <button style={{ 'padding': '5px 40px', backgroundColor: 'rgb(174, 32, 174)', width: '80%' }}>Submit</button>
+                    <button style={{ 'padding': '5px 40px', backgroundColor: 'rgb(174, 32, 174)', width: '80%' }} onClick={handleOnClickSubmit} >Submit</button>
                 </div>
 
                 <div style={{ 'marginTop': '3vh' }}>

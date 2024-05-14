@@ -35,14 +35,22 @@ function App() {
       <div className='Login'>
         {
           userName.length === 0 ?
-            <Link
-              to="/login"
-              style={{ 'textDecoration': 'none', 'color': 'black' }}
-            >
-              <h3>
-                LogIn/SignUp
-              </h3>
-            </Link> :
+            <h3>
+              <Link
+                to="/login"
+                style={{ 'textDecoration': 'none', 'color': 'black' }}
+              >
+                LogIn
+              </Link>
+              /
+              <Link
+                to="/signup"
+                style={{ 'textDecoration': 'none', 'color': 'black' }}
+              >
+                SignUp
+              </Link>
+            </h3>
+            :
             <h3>{userName}</h3>
         }
       </div>

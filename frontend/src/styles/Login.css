@@ -1,4 +1,4 @@
-.container-signup{
+.container-login{
     width: 50vw;
     height: 60vh;
     margin: auto;
@@ -9,7 +9,7 @@
     border-radius: 5px;
 }
 
-.form-component{
+.form-component-login{
     display: flex;
     flex-direction: column;
     margin-top: 10vh;
@@ -19,7 +19,7 @@
     padding: 40px;
 }
 
-.description{
+.description-login{
     background-color: rgb(79, 107, 220);
     font-size: 40px;
     padding: 40px;
@@ -34,4 +34,14 @@
 
 .btn:hover{
     cursor: pointer;
+}
+
+#email{
+    padding: 3px;
+    font-size: larger;
+}
+
+#password{
+    padding: 3px;
+    font-size: larger;
 }

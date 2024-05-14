@@ -12,10 +12,9 @@
 .form-component{
     display: flex;
     flex-direction: column;
-    margin-top: 10vh;
     text-align: center;
     width: 60%;
-    margin: 10vh auto 0px auto;
+    margin: 5vh auto 0px auto;
     padding: 40px;
 }
 
@@ -34,4 +33,19 @@
 
 button:hover{
     cursor: pointer;
+}
+
+#email{
+    padding: 3px;
+    font-size: larger;
+}
+
+#name{
+    padding: 3px;
+    font-size: larger;
+}
+
+#password{
+    padding: 3px;
+    font-size: larger;
 }
