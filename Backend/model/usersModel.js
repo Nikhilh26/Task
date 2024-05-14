@@ -6,7 +6,7 @@ const userModel = new mongoose.Schema({
         required: true
     },
     name: {
-        type: Boolean,
+        type: String,
         default: function () {
             return this.email;
         } // might need to change
@@ -18,6 +18,6 @@ const userModel = new mongoose.Schema({
 });
 
 // Create TodoItem model
-const User = mongoose.model('TodoItem', userModel);
+const User = mongoose.model("users", userModel);
 
 module.exports = User;
