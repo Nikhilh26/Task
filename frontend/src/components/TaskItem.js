@@ -86,7 +86,3 @@ export default function TaskItem({ content, allowShift = true, taskId }) {
         </div>
     )
 }
-
-// delete
-// edit
-// shift to completed

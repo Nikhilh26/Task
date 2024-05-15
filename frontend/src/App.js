@@ -56,7 +56,6 @@ function App() {
     }
   };
 
-
   const shiftTask = async (taskId) => {
     try {
       const token = localStorage.getItem('token')
@@ -192,7 +191,16 @@ function App() {
               </Link>
             </h3>
             :
-            <h3 title='Logout' >{userName}</h3>
+            <button title='Logout'
+              onClick={(e) => {
+                e.preventDefault();
+                localStorage.removeItem('token');
+                setCompleted([]);
+                setUserName('');
+                setToDo([]);
+              }}
+              style={{ 'border': '0px', backgroundColor: 'rgb(51, 51, 230)', fontWeight: 'bold', fontSize: '16px' }}
+            >{userName}</button>
         }
       </div>
 
@@ -226,6 +234,7 @@ function App() {
           } */}
         </div>
       </div>
+
     </TaskContext.Provider>
   );
 }
