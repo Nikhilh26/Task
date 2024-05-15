@@ -1,6 +1,6 @@
 .container-login{
     width: 50vw;
-    height: 60vh;
+    height: 65vh;
     margin: auto;
     display: flex;
     flex-direction: row;
@@ -21,7 +21,7 @@
 
 .description-login{
     background-color: rgb(79, 107, 220);
-    font-size: 40px;
+    font-size: 30px;
     padding: 40px;
     width: 60%;
 }
@@ -44,4 +44,35 @@
 #password{
     padding: 3px;
     font-size: larger;
+}
+
+@media screen and (max-width:1024px){
+    .container-login{
+        width: 70vw;
+    }
+}
+
+@media screen and (max-width:650px){
+    .container-login{
+        width: 80vw;
+    }
+    .description-login{
+        font-size: 25px;
+    }
+}
+
+@media screen and (max-width:500px){
+    .container-login{
+        width: 98vw;
+        min-width: 440px;
+    }
+    .description-login{
+        font-size: 28px;
+    }
+    #email{
+        font-size: xx-small;
+    }
+    #password{
+        font-size: larger;
+    }
 }

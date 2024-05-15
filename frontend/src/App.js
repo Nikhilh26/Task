@@ -229,9 +229,6 @@ function App() {
         <div className='Tasklist'>
           <TaskList header={'To Be Done'} borderColor={'rgb(170, 22, 22)'} list={toDo} />
           <TaskList header={'Completed'} borderColor={'green'} list={completed} />
-          {/* {
-            completed.map((ele, idx) => <div key={idx}>{ele.description}</div>)
-          } */}
         </div>
       </div>
 

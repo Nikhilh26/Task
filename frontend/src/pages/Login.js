@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './../styles/Login.css';
-import { Link, redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
@@ -40,36 +40,42 @@ export default function SignUp() {
     }
 
     return (
-        <div className='container-login'>
-            <h1 className='description-login'>
-                Please Login to Manage and Track your task
-            </h1>
+        <>
+            <div className='Login' title='Home' onClick={(e) => { e.preventDefault(); navigate('/') }} >
+                Go Back
+            </div>
+            <div className='container-login'>
 
-            <form className='form-component-login'>
+                <h1 className='description-login'>
+                    Please Login to Manage and Track your task
+                </h1>
 
-                <label htmlFor='email'>
-                    <h2>
-                        Email:
-                    </h2>
-                </label>
+                <form className='form-component-login'>
 
-                <input id='email' type="text" value={email} onChange={(e) => setEmail(e.target.value)}></input>
+                    <label htmlFor='email'>
+                        <h2>
+                            Email:
+                        </h2>
+                    </label>
 
-                <label htmlFor='password'>
-                    <h2>
-                        Password:
-                    </h2>
-                </label>
-                <input id='password' type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+                    <input id='email' type="text" value={email} onChange={(e) => setEmail(e.target.value)}></input>
 
-                <div className='btn' onClick={handleOnClickSubmit}>
-                    <button style={{ 'padding': '5px 40px', backgroundColor: 'rgb(79, 107, 220)', width: '80%', 'fontWeight': 'bolder' }}>Submit</button>
-                </div>
+                    <label htmlFor='password'>
+                        <h2>
+                            Password:
+                        </h2>
+                    </label>
+                    <input id='password' type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
 
-                <div style={{ 'marginTop': '3vh' }}>
-                    (If you have not registered before you can login over <Link to='/signup'>here</Link>)
-                </div>
-            </form>
-        </div>
+                    <div className='btn' onClick={handleOnClickSubmit}>
+                        <button style={{ 'padding': '5px 40px', backgroundColor: 'rgb(79, 107, 220)', width: '80%', 'fontWeight': 'bolder' }}>Submit</button>
+                    </div>
+
+                    <div style={{ 'marginTop': '3vh' }}>
+                        (If you have not registered before you can login over <Link to='/signup'>here</Link>)
+                    </div>
+                </form>
+            </div>
+        </>
     )
 }

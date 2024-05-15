@@ -17,6 +17,7 @@
 
 .shift-btn{
     padding: 5px;
+    flex-grow: 1;
     margin-left:10px ;
     background-color: blue;
     border: 0px;
@@ -25,13 +26,15 @@
 }
 
 .description-content{
-    max-width: 17vw;
+    /* max-width: 17vw; */
+    text-align: left;
+    flex-grow: 1;
     height: fit-content;
     word-wrap: break-word;
 }
 
 .description-content2{
-    max-width: 23vw;
+    /* max-width: 23vw; */
     height: fit-content;
     word-wrap: break-word;
     text-align: left;
@@ -44,4 +47,23 @@
     border: 0px;
     font-weight:bolder;
     letter-spacing: 0.5px;
+}
+
+@media screen and (min-width: 1024px) {
+  .description-content,.description-content2{
+    font-size: 30px;
+  }
+}
+
+@media screen and (min-width: 900px) and (max-width: 1024px)  {
+  .description-content,.description-content2{
+    font-size: 23px;
+  }
+}
+
+@media screen and (max-width:550px) {
+  .delete-btn,.shift-btn,.edit-btn{
+    font-size: 8px;
+  }
+
 }

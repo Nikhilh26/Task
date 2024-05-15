@@ -31,9 +31,9 @@ export default function TaskItem({ content, allowShift = true, taskId }) {
                     >
                     </input>
                     :
-                    <h1 className={`description-content${!allowShift ? '2' : ''}`}>
+                    <h3 className={`description-content${!allowShift ? '2' : ''}`}>
                         {content}
-                    </h1>
+                    </h3>
             }
 
             <div>
