@@ -40,15 +40,10 @@ class ToDoControllers {
         try {
             const { taskId } = req.body;
 
-            const results = await TodoItem.findByIdAndUpdate(taskId, { completed: true }, { new: true })
-                .then(updatedDoc => {
-                    console.log("Task updated successfully:", updatedDoc);
-                })
-                .catch(err => {
-                    console.error("Error updating task:", err);
-                });
+            const results = await TodoItem.findByIdAndUpdate(taskId, { completed: true });
 
-            return res.json({ success: true, message: 'Updated Task Succesfully' })
+            return res.json({ success: true, message: 'Updated Task Succesfully', description: results.description });
+
         } catch (error) {
             console.log(error);
             res.json({

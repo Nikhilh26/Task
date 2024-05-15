@@ -11,11 +11,15 @@ export default function TaskList({ list, header, borderColor }) {
                 style={{ 'borderBottom': `10px solid ${borderColor}` }}
             >
                 {
-                    list.map(ele =>
-                        <TaskItem
-                            content={ele}
+                    list.map(ele => {
+                        // console.log(ele.description);
+                        return (<TaskItem
+                            content={ele.description}
                             allowShift={header !== 'Completed'}
-                        />
+                            key={ele.taskId}
+                            taskId={ele.taskId}
+                        />)
+                    }
                     )
                 }
             </div>

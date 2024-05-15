@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 import './App.css';
 import TaskList from './components/TaskList';
 import { Link } from 'react-router-dom';
@@ -8,26 +8,167 @@ export const useTaskContext = () => useContext(TaskContext);
 
 function App() {
 
-  const editTask = () => {
-  };
-
-  const shiftTask = () => {
-  };
-
-  const deleteTask = () => {
-  };
-
-  const [toDo, setToDo] = useState([]); // {id:mongodb,message:''} this id will be used as key and for shifting,deleting and editing
+  const [toDo, setToDo] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [text, setText] = useState('');
   const [userName, setUserName] = useState('');
 
-  const handleOnClickAdd = (e) => {
-    e.preventDefault();
-    setToDo((prev) => [...prev, text]);
-    setText('');
-    console.log(toDo);
+  const editTask = async (taskId, text) => {
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) return;
+      const response = await fetch('http://localhost:8000/api/todo/description', {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `bearer ${token}`
+        },
+        method: 'PUT',
+        body: JSON.stringify({
+          taskId,
+          description: text
+        })
+      })
+
+      const data = await response.json();
+
+      if (data.success) {
+        setToDo((prev) => prev.map((e) => {
+          if (e.taskId === taskId) {
+            return { ...e, description: text }
+          } else {
+            return e;
+          }
+        }));
+
+        setCompleted((prev) => prev.map((e) => {
+          if (e.taskId === taskId) {
+            return { ...e, description: text }
+          } else {
+            return e;
+          }
+        }));
+      }
+
+      console.log(toDo);
+    } catch (error) {
+      console.log(error);
+      alert('Something went wrong try again later');
+    }
+  };
+
+
+  const shiftTask = async (taskId) => {
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) return;
+      const response = await fetch('http://localhost:8000/api/todo/complete', {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `bearer ${token}`
+        },
+        method: 'PUT',
+        body: JSON.stringify({
+          taskId
+        })
+      })
+
+      const data = await response.json();
+      if (data.success) {
+        setToDo((prev) => prev.filter((e) => e.taskId !== taskId));
+        setCompleted((prev) => [...prev, { description: data.description, taskId }]);
+      }
+
+      console.log(toDo);
+    } catch (error) {
+      console.log(error);
+      alert('Something went wrong try again later');
+    }
+  };
+
+  const deleteTask = async (taskId) => {
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) return;
+      const response = await fetch('http://localhost:8000/api/todo', {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `bearer ${token}`
+        },
+        method: 'DELETE',
+        body: JSON.stringify({
+          taskId
+        })
+      })
+
+      const data = await response.json();
+      if (data.success) {
+        setToDo((prev) => prev.filter((e) => e.taskId !== taskId));
+        setCompleted((prev) => prev.filter((e) => e.taskId !== taskId));
+      }
+
+      console.log(toDo);
+    } catch (error) {
+      console.log(error);
+      alert('Something went wrong try again later');
+    }
+  };
+
+  const handleOnClickAdd = async (e) => {
+    try {
+      e.preventDefault();
+      const token = localStorage.getItem('token')
+      if (!token) return;
+      const response = await fetch('http://localhost:8000/api/todo', {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `berarer ${token}`
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          description: text
+        })
+      })
+
+      const data = await response.json();
+      if (data.success) {
+        setToDo((prev) => [...prev, { description: text, taskId: data.taskId }]);
+      }
+      setText('');
+      console.log(toDo);
+    } catch (error) {
+      console.log(error);
+      alert('Something went wrong try again later');
+    }
   }
+
+  useEffect(() => {
+    try {
+      const token = localStorage.getItem('token');
+      if (token) {
+
+        const handle = async () => {
+          const response = await fetch('http://localhost:8000/api/todo', {
+            headers: {
+              'Content-Type': 'application/json',
+              authorization: `berarer ${token}`
+            }
+          })
+
+          const data = await response.json();
+
+          if (data.success) {
+            setUserName(data.name);
+            setCompleted(data.completedTasks)
+            setToDo(data.toDoTasks)
+          }
+        }
+
+        handle();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   return (
     <TaskContext.Provider value={{ editTask, shiftTask, deleteTask }}>
@@ -51,7 +192,7 @@ function App() {
               </Link>
             </h3>
             :
-            <h3>{userName}</h3>
+            <h3 title='Logout' >{userName}</h3>
         }
       </div>
 
@@ -80,6 +221,9 @@ function App() {
         <div className='Tasklist'>
           <TaskList header={'To Be Done'} borderColor={'rgb(170, 22, 22)'} list={toDo} />
           <TaskList header={'Completed'} borderColor={'green'} list={completed} />
+          {/* {
+            completed.map((ele, idx) => <div key={idx}>{ele.description}</div>)
+          } */}
         </div>
       </div>
     </TaskContext.Provider>

@@ -5,6 +5,7 @@ dotenv.config();
 const ACCESS_TOKEN = process.env.JWT_TOKEN;
 
 const validateToken = async (req, res, next) => {
+    // console.log(req.headers);
     let token = req.headers.authorization.split(" ")[1];
     // console.log(token);
 
