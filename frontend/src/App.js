@@ -17,7 +17,7 @@ function App() {
     try {
       const token = localStorage.getItem('token')
       if (!token) return;
-      const response = await fetch('http://localhost:8000/api/todo/description', {
+      const response = await fetch('https://task-tnit.onrender.com/api/todo/description', {
         headers: {
           'Content-Type': 'application/json',
           authorization: `bearer ${token}`
@@ -60,7 +60,7 @@ function App() {
     try {
       const token = localStorage.getItem('token')
       if (!token) return;
-      const response = await fetch('http://localhost:8000/api/todo/complete', {
+      const response = await fetch('https://task-tnit.onrender.com/api/todo/complete', {
         headers: {
           'Content-Type': 'application/json',
           authorization: `bearer ${token}`
@@ -88,7 +88,7 @@ function App() {
     try {
       const token = localStorage.getItem('token')
       if (!token) return;
-      const response = await fetch('http://localhost:8000/api/todo', {
+      const response = await fetch('https://task-tnit.onrender.com/api/todo', {
         headers: {
           'Content-Type': 'application/json',
           authorization: `bearer ${token}`
@@ -117,7 +117,7 @@ function App() {
       e.preventDefault();
       const token = localStorage.getItem('token')
       if (!token) return;
-      const response = await fetch('http://localhost:8000/api/todo', {
+      const response = await fetch('https://task-tnit.onrender.com/api/todo', {
         headers: {
           'Content-Type': 'application/json',
           authorization: `berarer ${token}`
@@ -146,7 +146,7 @@ function App() {
       if (token) {
 
         const handle = async () => {
-          const response = await fetch('http://localhost:8000/api/todo', {
+          const response = await fetch('https://task-tnit.onrender.com/api/todo', {
             headers: {
               'Content-Type': 'application/json',
               authorization: `berarer ${token}`

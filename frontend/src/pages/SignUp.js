@@ -14,7 +14,7 @@ export default function SignUp() {
         console.log(password);
         console.log(email);
 
-        const resp = await fetch('http://localhost:8000/api/register', {
+        const resp = await fetch('https://task-tnit.onrender.com/api/register', {
             body: JSON.stringify({
                 email,
                 password,
