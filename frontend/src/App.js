@@ -12,6 +12,7 @@ function App() {
   const [completed, setCompleted] = useState([]);
   const [text, setText] = useState('');
   const [userName, setUserName] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const editTask = async (taskId, text) => {
     try {
@@ -117,6 +118,7 @@ function App() {
       e.preventDefault();
       const token = localStorage.getItem('token')
       if (!token) return;
+      setLoading(true);
       const response = await fetch('https://task-tnit.onrender.com/api/todo', {
         headers: {
           'Content-Type': 'application/json',
@@ -133,6 +135,7 @@ function App() {
         setToDo((prev) => [...prev, { description: text, taskId: data.taskId }]);
       }
       setText('');
+      setLoading(false);
       console.log(toDo);
     } catch (error) {
       console.log(error);
@@ -219,6 +222,7 @@ function App() {
 
           <button
             className='Add-btn'
+            disabled={loading}
             onClick={handleOnClickAdd}
           >
             Add Task

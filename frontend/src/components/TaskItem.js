@@ -7,14 +7,13 @@ export default function TaskItem({ content, allowShift = true, taskId }) {
     const { editTask, shiftTask, deleteTask } = useTaskContext();
     const [text, setText] = useState(content);
     const [canEdit, setCanEdit] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     const inputRef = useRef(null);
 
     useEffect(() => {
         if (canEdit && inputRef.current) {
             inputRef.current.focus();
-        }
-        return () => {
-            inputRef.current = null;
         }
     }, [canEdit]);
 
@@ -25,7 +24,7 @@ export default function TaskItem({ content, allowShift = true, taskId }) {
                     <input className={`description-content${!allowShift ? '2' : ''}`}
                         value={text}
                         onChange={(e) => setText(e.target.value)}
-                        onBlur={(e) => setCanEdit(!canEdit)}
+                        // onBlur={(e) => setCanEdit(!canEdit)}
                         style={{ fontWeight: 'bold', fontSize: '20px' }}
                         ref={inputRef}
                     >
@@ -39,10 +38,13 @@ export default function TaskItem({ content, allowShift = true, taskId }) {
             <div>
                 <button
                     className='delete-btn'
-                    onClick={(e) => {
+                    onClick={async (e) => {
                         e.preventDefault();
-                        deleteTask(taskId);
+                        setLoading(true);
+                        await deleteTask(taskId);
+                        setLoading(false);
                     }}
+                    disabled={loading}
                 >
                     Delete
                 </button>
@@ -51,11 +53,15 @@ export default function TaskItem({ content, allowShift = true, taskId }) {
                     allowShift ?
                         <button
                             className='shift-btn'
-                            onClick={(e) => {
+                            onClick={async (e) => {
                                 e.preventDefault();
+                                setLoading(true);
                                 shiftTask(taskId);
+                                setLoading(false);
                             }}
+                            disabled={loading}
                         >
+
                             Completed
                         </button>
                         : ''
@@ -63,13 +69,14 @@ export default function TaskItem({ content, allowShift = true, taskId }) {
 
                 <button
                     className='edit-btn'
-                    onClick={(e) => {
+                    disabled={loading}
+                    onClick={async (e) => {
                         e.preventDefault();
-
+                        setLoading(true);
                         if (canEdit) {
-                            editTask(taskId, text);
+                            await editTask(taskId, text);
                         }
-
+                        setLoading(false);
                         setCanEdit(!canEdit)
                     }}
                 >

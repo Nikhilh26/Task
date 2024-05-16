@@ -6,11 +6,13 @@ import { useNavigate } from 'react-router-dom';
 export default function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const handleOnClickSubmit = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         console.log(password);
         console.log(email);
 
@@ -24,9 +26,11 @@ export default function SignUp() {
                 'Content-Type': 'application/json'
             },
         });
-
+        console.log(resp);
         const body = await resp.json();
         console.log(body);
+        setLoading(false);
+
         if (body.success) {
             localStorage.setItem('token', body.token);
             navigate('/')
@@ -68,7 +72,15 @@ export default function SignUp() {
                     <input id='password' type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
 
                     <div className='btn' onClick={handleOnClickSubmit}>
-                        <button style={{ 'padding': '5px 40px', backgroundColor: 'rgb(79, 107, 220)', width: '80%', 'fontWeight': 'bolder' }}>Submit</button>
+                        <button style={{ 'padding': '5px 40px', backgroundColor: 'rgb(79, 107, 220)', width: '80%', 'fontWeight': 'bolder' }}
+                            disabled={loading}
+                        >
+                            {
+                                loading ?
+                                    'Loading...' :
+                                    'Submit'
+                            }
+                        </button>
                     </div>
 
                     <div style={{ 'marginTop': '3vh' }}>
