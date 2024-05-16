@@ -52,7 +52,22 @@ class RegistrationControllers {
         } catch (error) {
             console.log("Error at controllers/authLogin.js")
             console.log(error);
-            res.status(501).send("Error in Server");
+
+            if (error.code === 11000 || error.code === 11001) {
+                // Handle the unique constraint violation error
+                return res.status(400).send({
+                    success: false,
+                    message: "Email already registered",
+                    redirect: true
+                });
+            } else {
+                // Handle other types of errors
+                return res.status(500).send({
+                    success: false,
+                    message: "Internal server error",
+                    error: error.message
+                });
+            }
         }
 
     }
