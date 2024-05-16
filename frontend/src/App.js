@@ -217,6 +217,7 @@ function App() {
             type='text'
             placeholder='Enter Task to be done'
             value={text}
+            disabled={loading}
             onChange={(e) => setText(e.target.value)}
           ></input>
 
