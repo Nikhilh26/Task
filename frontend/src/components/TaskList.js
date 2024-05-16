@@ -12,7 +12,6 @@ export default function TaskList({ list, header, borderColor }) {
             >
                 {
                     list.map(ele => {
-                        // console.log(ele.description);
                         return (<TaskItem
                             content={ele.description}
                             allowShift={header !== 'Completed'}

@@ -8,6 +8,7 @@
     background-color: aliceblue;
     border-radius: 50px;
     padding: 20px;
+    overflow-y: auto;
 }
 
 @media screen and (max-width:780px) {
